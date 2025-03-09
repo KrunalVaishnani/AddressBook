@@ -1,0 +1,69 @@
+﻿@model addressbook_app.Models.ContactCategoryModel
+
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <i class="fa fa-arrow-right"></i>
+        </li>
+        <li>
+            <span>ContactCategory Add/Edit</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+
+<div class="portlet light bordered" style="width:120vh;margin-top:2vh;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject font-dark sbold uppercase">ContactCategory Add/Edit</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            @Html.HiddenFor(m => m.ContactCategoryID)
+
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>ContactCategory Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="ContactCategoryName">
+                        <span asp-validation-for="ContactCategoryName" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                @* <div class="form-group">
+                <label asp-for="UserID" class="col-md-3 control-label"><span class="text-danger fs-bold"></span>User Name</label>
+                <div class="col-md-9">
+                <select class="form-control" asp-for="UserID">
+                <option value="">Select User</option>
+                @foreach (var user in ViewBag.UserList)
+                {
+                <option value="@user.UserID">@user.DisplayName</option>
+                }
+                </select>
+                <span asp-validation-for="UserID" class="text-danger"></span>
+                </div>
+                </div> *@
+
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" asp-controller="ContactCategory" asp-action="ContactCategoryAddEdit" class="btn green" value="Submit" />
+                            <a asp-controller="ContactCategory" asp-action="ContactCategoryList" type="button" class="btn default">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

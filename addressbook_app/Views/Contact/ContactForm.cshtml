@@ -1,0 +1,261 @@
+﻿@model ContactModel
+
+<!-- BEGIN PAGE BAR -->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <i class="fa fa-arrow-right"></i>
+        </li>
+        <li>
+            <span>Contact Add/Edit</span>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE BAR -->
+
+<div class="portlet light bordered" style="width:120vh; margin-top:2vh;">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject font-dark sbold uppercase">Contact Add/Edit</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            @Html.HiddenFor(m => m.ContactID)
+
+            <div class="form-body">
+                <!-- Contact Name -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>Contact Name</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>Gender</label>
+                    <div class="col-md-9">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" asp-for="Gender" value="male"/> Male
+                            </label>
+                            <label style="margin-left: 20px;">
+                                <input type="radio" asp-for="Gender" value="female"/> Female
+                            </label>
+                        </div>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>Mobile Number</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="MobileNo" />
+                        <span asp-validation-for="MobileNo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Number -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">WhatsApp Number</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="WhatsAppNo" />
+                        <span asp-validation-for="WhatsAppNo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Email ID -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>Email ID</label>
+                    <div class="col-md-9">
+                        <input type="email" class="form-control" asp-for="EmailID" />
+                        <span asp-validation-for="EmailID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" asp-for="Address"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Date of Birth</label>
+                    <div class="col-md-9">
+                        <input type="date" class="form-control" asp-for="DoB" />
+                        <span asp-validation-for="DoB" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Facebook ID -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Facebook ID</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="FaceBookID" />
+                        <span asp-validation-for="FaceBookID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Instagram ID -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Instagram ID</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="InstagramID" />
+                        <span asp-validation-for="InstagramID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Blood Group -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Blood Group</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" asp-for="BloodGroup" />
+                        <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Country -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>Country</label>
+                    <div class="col-md-9">
+                        <select id="country" class="form-control" asp-for="CountryID">
+                            <option value="">Select Country</option>
+                            
+                                @foreach (var country in ViewBag.CountryList)
+                                {
+                                    <option value="@country.CountryID">@country.CountryName</option>
+                                }
+                            
+                        </select>
+                        <span asp-validation-for="CountryID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- State -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>State</label>
+                    <div class="col-md-9">
+                        <select id="state" class="form-control" asp-for="StateID">
+                            <option value="">Select State</option>
+                            @if (ViewBag.StateList != null)
+                            {
+                            @foreach (var state in ViewBag.StateList)
+                            {
+                                <option value="@state.StateID">@state.StateName</option>
+                            }
+                            }
+                        </select>
+                        <span asp-validation-for="StateID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- City -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label"><span class="text-danger">*</span>City</label>
+                    <div class="col-md-9">
+                        <select id="city" class="form-control" asp-for="CityID">
+                            <option value="">Select City</option>
+                            @if (ViewBag.CityList != null)
+                            {
+                            @foreach (var city in ViewBag.CityList)
+                            {
+                                <option value="@city.CityID">@city.CityName</option>
+                            }
+                            }
+                        </select>
+                        <span asp-validation-for="CityID" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <!-- Submit and Cancel -->
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button asp-controller="Contact" asp-action="ContactAddEdit" type="submit" class="btn green">Submit</button>
+                            <a asp-controller="Contact" asp-action="ContactList" class="btn default">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#country').change(function () {
+                var countryId = $(this).val();
+                $('#state').empty().append('<option value="">Select State</option>');
+
+                if (countryId) {
+                    $.ajax({
+                        url: '/City/GetStatesByCountry',
+                        type: 'GET',
+                        data: { countryId: countryId },
+                        success: function (states) {
+                            if (states.length === 0) {
+                                alert("No states available for the selected country.");
+                            } else {
+                                states.forEach(function (state) {
+                                    $('#state').append('<option value="' + state.stateID + '">' + state.stateName + '</option>');
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error: " + error);
+                            alert("An error occurred while fetching states. Please try again.");
+                        }
+
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#state').change(function () {
+                var stateID = $(this).val();
+                $('#city').empty().append('<option value="">Select State</option>');
+
+                if (stateID) {
+                    $.ajax({
+                        url: '/Contact/CityDropDown',
+                        type: 'GET',
+                        data: { stateID: stateID },
+                        success: function (citys) {
+                            if (citys.length === 0) {
+                                alert("No city available for the selected state.");
+                            } else {
+                                citys.forEach(function (city) {
+                                    $('#city').append('<option value="' + city.cityID + '">' + city.cityName + '</option>');
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error: " + error);
+                            alert("An error occurred while fetching states. Please try again.");
+                        }
+
+                    });
+                }
+            });
+        });
+    </script>
+}
