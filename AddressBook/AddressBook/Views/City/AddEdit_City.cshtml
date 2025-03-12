@@ -1,0 +1,142 @@
+﻿@model AddressBook.Models.CityModel
+
+<main id="main" class="main flex-grow-1">
+
+    <div class="pagetitle">
+        <h1>City</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">City</li>
+                <li class="breadcrumb-item active">AddEdit_City</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add / Edit City</h5>
+
+            <form class="row g-3 needs-validation" asp-controller="City" asp-action="CitySave" id="cityForm" method="post" novalidate>
+                <input type="hidden" asp-for="CityID" />
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingName"
+                               placeholder="City Name"
+                               required
+                               asp-for="CityName" >
+                        <label for="floatingName">City Name</label>
+                        <span asp-validation-for="CityName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingSTDCode"
+                               placeholder="STD Code"
+                               asp-for="STDCode"
+                               required>
+                        <label for="floatingSTDCode">STD Code</label>
+                        <span asp-validation-for="STDCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingPinCode"
+                               placeholder="Pin Code"
+                               required
+                               asp-for="PinCode" >
+                        <label for="floatingPinCode">Pin Code</label>
+                        <span asp-validation-for="PinCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" asp-for="CountryID" id="floatingCountryName" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" required>
+                            <option value="" selected disabled>Select a Country Of State</option>
+                        </select>
+                        <label for="floatingCountryName">Country Name</label>
+                        <span asp-validation-for="CountryID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" id="floatingStateName" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))" required>
+                            <option value="" selected disabled>Select a State For City</option>
+                        </select>
+                        <label for="floatingStateName">State Name</label>
+                        <span asp-validation-for="StateID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" asp-for="UserID" id="floatingUserName" asp-items="@(new SelectList(ViewBag.UserList,"UserID","UserName"))" required>
+                            <option value="" selected disabled>Select a User Name</option>
+                            
+                        </select>
+                        <label for="floatingUserName">User Name</label>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+                </div>  
+                <div class="text-center pt-3">
+                    <button type="submit" onclick="confirmSave(event)" class="btn btn-success">Save</button>
+                    <a asp-controller="City" asp-action="CityList" class="btn btn-danger">Cancel</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</main>
+
+<script>
+    function confirmSave(event) {
+        event.preventDefault(); // Prevent form submission
+
+        var form = document.getElementById("cityForm");
+        console.log(form);
+        // Ensure jQuery Validation runs before submission
+        if (typeof $ !== "undefined" && $.validator && $("#cityForm").validate) {
+            $("#cityForm").validate(); // Run validation
+            if (!$("#cityForm").valid()) {
+
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Please fill out all required fields before submitting.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                return; // Stop execution if validation fails
+            }
+        }
+
+        // If validation passes, show confirmation popup
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to save this City?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Save it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: "success",
+                    title: "City has been saved successfully.",
+                    text: "Redirecting to City List...",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                setTimeout(() => {
+                    form.submit(); // Submit the form after validation
+                }, 2000);
+            }
+        });
+    }
+</script>

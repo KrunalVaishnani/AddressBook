@@ -1,0 +1,112 @@
+﻿@model AddressBook.Models.CountryModel
+
+<main id="main" class="main flex-grow-1">
+
+    <div class="pagetitle">
+        <h1>Country</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Country</li>
+                <li class="breadcrumb-item active">AddEdit_Country</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add / Edit Country</h5>
+
+            <form class="row g-3 needs-validation" asp-controller="Country" asp-action="CountrySave" id="countryForm" method="post">
+                <input type="hidden" asp-for="CountryID" />
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingName"
+                               placeholder="Country Name"
+                               required
+                               asp-for="CountryName" >
+                        <label for="floatingName">Country Name</label>
+                        <span asp-validation-for="CountryName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingCountryCode"
+                               placeholder="Country Code"
+                               required
+                               asp-for="CountryCode" >
+                        <label for="floatingCountryCode">Country Code</label>
+                        <span asp-validation-for="CountryCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" asp-for="UserID" id="floatingUserName" asp-items="@(new SelectList(ViewBag.UserList,"UserID","UserName"))" required>
+                            <option value="" selected disabled>Select a User Name</option>
+
+                        </select>
+                        <label for="floatingUserName">User Name</label>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="text-center pt-3">
+                    <button type="submit" onclick="confirmSave(event)" class="btn btn-success">Save</button>
+                    <a asp-controller="Country" asp-action="CountryList" class="btn btn-danger">Cancel</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</main>
+
+<script>
+    function confirmSave(event) {
+        event.preventDefault(); // Prevent form submission
+
+        var form = document.getElementById("countryForm");
+
+        // Ensure jQuery Validation runs before submission
+        if (typeof $ !== "undefined" && $.validator && $("#countryForm").validate) {
+            $("#countryForm").validate(); // Run validation
+            if (!$("#countryForm").valid()) {
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Please fill out all required fields before submitting.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                return; // Stop execution if validation fails
+            }
+        }
+
+        // If validation passes, show confirmation popup
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to save this Country?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Save it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Country has been saved successfully.",
+                    text: "Redirecting to Country List...",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                setTimeout(() => {
+                    form.submit(); // Submit the form after validation
+                }, 2000);
+            }
+        });
+    }
+
+</script>

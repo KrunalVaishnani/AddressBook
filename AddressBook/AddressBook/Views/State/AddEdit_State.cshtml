@@ -1,0 +1,120 @@
+﻿@model AddressBook.Models.StateModel
+
+<main id="main" class="main flex-grow-1">
+
+    <div class="pagetitle">
+        <h1>State</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">State</li>
+                <li class="breadcrumb-item active">AddEdit_State</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add / Edit State</h5>
+
+            <form class="row g-3 needs-validation" id="stateForm" asp-controller="State" asp-action="StateSave" method="post" novalidate>
+                <input type="hidden" asp-for="StateID" />
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingName"
+                               placeholder="State Name"
+                               required
+                               asp-for="StateName" >
+                        <label for="floatingName">State Name</label>
+                        <span asp-validation-for="StateName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text"
+                               class="form-control"
+                               id="floatingStateCode"
+                               placeholder="State Code"
+                               required
+                               asp-for="StateCode" >
+                        <label for="floatingStateCode">State Code</label>
+                        <span asp-validation-for="StateCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" asp-for="CountryID" id="floatingCountryName" asp-items="@(new SelectList(ViewBag.CountryList,"CountryID","CountryName"))" required>
+                            <option value="" selected disabled>Select a Country Of State</option>
+                        </select>
+                        <label for="floatingCountryName">Country Name</label>
+                        <span asp-validation-for="CountryID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="form-floating flex-grow-1">
+                        <select class="form-select border border-2" asp-for="UserID" id="floatingUserName" asp-items="@(new SelectList(ViewBag.UserList,"UserID","UserName"))" required>
+                            <option value="" selected disabled>Select a User Name</option>
+
+                        </select>
+                        <label for="floatingUserName">User Name</label>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="text-center pt-3">
+                    <button type="submit" onclick="confirmSave(event)" class="btn btn-success">Save</button>
+                    <a asp-controller="State" asp-action="StateList" class="btn btn-danger">Cancel</a>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</main>
+
+<script>
+    function confirmSave(event) {
+        event.preventDefault(); // Prevent form submission
+
+        var form = document.getElementById("stateForm");
+
+        // Ensure jQuery Validation runs before submission
+        if (typeof $ !== "undefined" && $.validator && $("#stateForm").validate) {
+            $("#stateForm").validate(); // Run validation
+            if (!$("#stateForm").valid()) {
+                Swal.fire({
+                    title: "Validation Error!",
+                    text: "Please fill out all required fields before submitting.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+                return; // Stop execution if validation fails
+            }
+        }
+
+        // If validation passes, show confirmation popup
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to save this State?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Save it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: "success",
+                    title: "State has been saved successfully.",
+                    text: "Redirecting to Country List...",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                setTimeout(() => {
+                    form.submit(); // Submit the form after validation
+                }, 2000);
+            }
+        });
+    }
+</script>
